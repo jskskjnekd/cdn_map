@@ -1,3 +1,8 @@
+var Tone = require("tone");
+const synth = new Tone.MembraneSynth().toMaster();
+var synth2 = new Tone.FMSynth().toMaster();
+
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3VueWFvamluMjAxMSIsImEiOiJjazEzMDhocWIwNGRvM2lsbjM2YW1qaTNoIn0.zDLR10-_uM7LrQFjmkMLEQ';
 var map = new mapboxgl.Map({
     container: 'map',
@@ -207,6 +212,7 @@ map.on('load', function () {
 
         for (let i=0; i<all_msg_flow.length; ++i){
             // rec_points.features.push(pointOnCircle(timestamp / 1000));
+            synth2.triggerAttackRelease('C4', '2n');
             rec_points.features.push(
                 get_updated_marker_coordinates(all_msg_flow[i][0], all_msg_flow[i][1], all_msg_flow[i][2], timestamp_int));
         }
