@@ -3,22 +3,22 @@ const {DeckGL, GeoJsonLayer, ArcLayer} = deck;
 
 const inFlowColors = [
     [255, 255, 204],
-    [199, 233, 180],
-    [127, 205, 187],
-    [65, 182, 196],
-    [29, 145, 192],
-    [34, 94, 168],
-    [12, 44, 132]
+    // [199, 233, 180],
+    // [127, 205, 187],
+    // [65, 182, 196],
+    // [29, 145, 192],
+    // [34, 94, 168],
+    // [12, 44, 132]
 ];
 
 const outFlowColors = [
     [255, 255, 178],
-    [254, 217, 118],
-    [254, 178, 76],
-    [253, 141, 60],
-    [252, 78, 42],
-    [227, 26, 28],
-    [177, 0, 38]
+    // [254, 217, 118],
+    // [254, 178, 76],
+    // [253, 141, 60],
+    // [252, 78, 42],
+    // [227, 26, 28],
+    // [177, 0, 38]
 ];
 
 const deckgl = new DeckGL({
@@ -30,16 +30,20 @@ const deckgl = new DeckGL({
     latitude: 40.7,
     zoom: 3,
     maxZoom: 15,
-    pitch: 30,
-    bearing: 30,
+    pitch: 80,
+    bearing: 0,
     layers: []
 });
 
 function getArcLayer(data, selectedFeature) {
 
     const {flows, centroid} = selectedFeature.properties;
+    console.log(centroid);
     const arcs = Object.keys(flows).map(toId => {
         const f = data.features[toId];
+        console.log("--->");
+        console.log(toId);
+        console.log(f.properties.name);
         return {
             source: centroid,
             target: f.properties.centroid,
