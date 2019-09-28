@@ -9,6 +9,7 @@ function win_for_testing_music_play() {
     let browser_play_music = new BrowserWindow({
         width: 1920,
         height: 1000,
+        frame: false,
         webPreferences: {
             nodeIntegration: true
         }
@@ -23,9 +24,31 @@ function win_for_testing_music_play() {
     });
 }
 
+function win_for_deck_gl() {
+    let browser_play_music = new BrowserWindow({
+        width: 1920,
+        height: 1000,
+        titleBarStyle: 'hidden',
+        vibrancy: 'ultra-dark',
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+
+    browser_play_music.loadFile('kepler.html');
+
+    browser_play_music.webContents.openDevTools();
+
+    browser_play_music.on('closed', function () {
+        browser_play_music = null;
+    });
+}
+
 function createWindow () {
     // this is a window just for testing playing music
     win_for_testing_music_play();
+    win_for_deck_gl();
 }
 
 // This method will be called when Electron has finished

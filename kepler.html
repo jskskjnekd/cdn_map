@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>deck.gl ArcLayer Example</title>
+
+    <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
+
+    <style type="text/css">
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            background: rgba(0, 0, 0, 1);
+        }
+        #tooltip:empty {
+            display: none;
+        }
+        #tooltip {
+            font-family: Helvetica, Arial, sans-serif;
+            position: absolute;
+            padding: 4px;
+            margin: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            max-width: 300px;
+            font-size: 10px;
+            z-index: 9;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="tooltip"></div>
+</body>
+
+<script type="text/javascript" src="deck_kepler.js"></script>
+</html>
