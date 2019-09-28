@@ -38,12 +38,8 @@ const deckgl = new DeckGL({
 function getArcLayer(data, selectedFeature) {
 
     const {flows, centroid} = selectedFeature.properties;
-    console.log(centroid);
     const arcs = Object.keys(flows).map(toId => {
         const f = data.features[toId];
-        console.log("--->");
-        console.log(toId);
-        console.log(f.properties.name);
         return {
             source: centroid,
             target: f.properties.centroid,
@@ -97,7 +93,14 @@ function renderLayers(data, selectedFeature) {
     });
 
     deckgl.setProps({ layers: [countyLayer, arcLayer] });
+
+    showAnimation(deckgl);
+
 }
+
+
+
+
 
 fetch('https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/arc/counties.json')
     .then(res => res.json())
