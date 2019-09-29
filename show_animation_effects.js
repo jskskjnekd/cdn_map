@@ -153,9 +153,7 @@ function get_updated_marker_coordinates(src, dst, start_time, current_time){
 function extracted(timestamp_int) {
     // synth2.triggerAttackRelease('C4', '2n');
     // synth.triggerAttackRelease(["C4", "E4", "A4"], "4n");
-    let ind = tic % 3;
-
-    ++tic;
+    let ind = tic % 7;
 
     if ((timestamp_int * timestamp_int) % 19 == 0){
         switch (ind) {
@@ -183,6 +181,7 @@ function extracted(timestamp_int) {
             default:
                 synth2.triggerAttackRelease('bb4', '2n');
         }
+        ++tic;
     }
 }
 
