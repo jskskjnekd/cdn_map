@@ -1,6 +1,12 @@
 var Tone = require("tone");
 const synth = new Tone.MembraneSynth().toMaster();
-var synth2 = new Tone.FMSynth().toMaster();
+//var synth2 = new Tone.FMSynth().toMaster();
+var synth2 = new Tone.PolySynth(6, Tone.Synth, {
+    oscillator : {
+        type : "square"
+    }
+}).toMaster();
+
 
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3VueWFvamluMjAxMSIsImEiOiJjazEzMDhocWIwNGRvM2lsbjM2YW1qaTNoIn0.zDLR10-_uM7LrQFjmkMLEQ';
@@ -15,6 +21,8 @@ var radius = 20;
 let max_time_interval = 2000;
 let all_msg_flow = [];
 
+
+let tic = 0;
 
 let cities = [
     [-80.243057, 27.192223],
@@ -125,17 +133,6 @@ let cities = [
 
 
 
-function pointOnCircle(angle) {
-    return {"type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    Math.cos(angle) * radius + Math.random()*10,
-                    Math.sin(angle) * radius + Math.random()*10,
-                ]
-            }};
-}
-
 function get_updated_marker_coordinates(src, dst, start_time, current_time){
     if (current_time - start_time < max_time_interval){
         let coeff = (current_time - start_time)/max_time_interval;
@@ -151,6 +148,42 @@ function get_updated_marker_coordinates(src, dst, start_time, current_time){
                 }};
     }
     return undefined;
+}
+
+function extracted(timestamp_int) {
+    // synth2.triggerAttackRelease('C4', '2n');
+    // synth.triggerAttackRelease(["C4", "E4", "A4"], "4n");
+    let ind = tic % 3;
+
+    ++tic;
+
+    if ((timestamp_int * timestamp_int) % 19 == 0){
+        switch (ind) {
+            case 0:
+                synth.triggerAttackRelease('C4', '2n');
+                break;
+            case 1:
+                synth.triggerAttackRelease('Eb4', '2n');
+                break;
+            case 2:
+                synth.triggerAttackRelease('g4', '2n');
+                break;
+            case 3:
+                synth.triggerAttackRelease('C5', '2n');
+                break;
+            case 4:
+                synth.triggerAttackRelease('C3', '2n');
+                break;
+            case 5:
+                synth.triggerAttackRelease('F4', '2n');
+                break;
+            case 6:
+                synth.triggerAttackRelease('F5', '2n');
+                break;
+            default:
+                synth2.triggerAttackRelease('bb4', '2n');
+        }
+    }
 }
 
 map.on('load', function () {
@@ -210,9 +243,13 @@ map.on('load', function () {
         all_msg_flow = should_be_updated;
         console.log("-> ", all_msg_flow.length);
 
+
+
+        if (all_msg_flow.length > 10){
+            extracted(timestamp_int);
+        }
+
         for (let i=0; i<all_msg_flow.length; ++i){
-            // rec_points.features.push(pointOnCircle(timestamp / 1000));
-            synth2.triggerAttackRelease('C4', '2n');
             rec_points.features.push(
                 get_updated_marker_coordinates(all_msg_flow[i][0], all_msg_flow[i][1], all_msg_flow[i][2], timestamp_int));
         }
